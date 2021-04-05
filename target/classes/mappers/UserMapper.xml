@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncs.UserMapper">
+
+	
+	<insert id="join">
+		INSERT INTO member_tb VALUES(#{email},#{password},#{phone},#{birthd},10000,sysdate)
+	</insert>
+	
+	<select id="selectOne" resultType="com.hsm.vo.UserVO">
+	    SELECT * FROM member_tb WHERE email = #{email}
+	</select>
+	
+	<select id="busList" resultType="com.hsm.vo.AllBusVO">
+	    SELECT * FROM all_bus_tb
+	</select>
+	
+	<select id="busTimeList" resultType="com.hsm.vo.BusTimeVO">
+	     SELECT * FROM ${area}_time_tb
+	</select>
+	<select id="busChoose" resultType="com.hsm.vo.BusTimeVO">
+	     SELECT * FROM ${area}_time_tb WHERE bus_name = #{bus_name}
+	</select>
+	<select id="busSeat" resultType="com.hsm.vo.SeatVO">
+		SELECT * FROM ${bus_name}
+	</select>	
+</mapper>  
