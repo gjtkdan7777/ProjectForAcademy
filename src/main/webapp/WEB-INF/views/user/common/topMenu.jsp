@@ -8,7 +8,7 @@
 <c:if test="${loginID!=null}">
 	<li class="user-id">${loginID}</li>
 	<li><a href="logout" class="top-menu-btn">로그아웃</a></li>
-	<li><a href="#e">마이페이지</a></li>
+	<li><a href="myPage">마이페이지</a></li>
 </c:if>
 	<!-- //login -->
 <c:if test="${loginID==null}">

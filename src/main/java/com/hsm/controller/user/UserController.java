@@ -87,7 +87,7 @@ public class UserController {
 	public String seat(Model model, BusTimeVO vo) {
 		String bus_name = vo.getBus_name();
 		String area = bus_name.substring(0,bus_name.lastIndexOf("_"));
-		vo.setArea(area);
+		vo.setDeparture_area(area);
 		vo = service.busChoose(vo);
 		System.out.println(vo);
 		model.addAttribute("vo", vo);

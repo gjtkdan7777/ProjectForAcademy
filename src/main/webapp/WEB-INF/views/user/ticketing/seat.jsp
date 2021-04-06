@@ -53,7 +53,7 @@
 					<div class="terminal-box">
 						<div class="start">
 							<div class="round">출발</div>
-							<div class="text">${vo.area}</div>
+							<div class="text">${vo.departure_area}</div>
 						</div>
 						<div class="end">
 							<div class="round">도착</div>
@@ -65,7 +65,7 @@
 				<!-- detail-box -->
 				<div class="detail-box">
 					<div class="detail-head-box">
-						<div class="seat">잔여 ${li.remaining_seats}석 / 전체 28석</div>
+						<div class="seat">잔여 ${vo.remaining_seats}석 / 전체 28석</div>
 						<div class="text"><span class="square-orange"></span>여성/노약자 우선</div>
 					</div>
 					<div class="detail-body-box">
@@ -227,7 +227,7 @@
 					<div class="right-box">
 						<div class="start">
 							<div class="round">출발</div>
-							<div class="text">${vo.area}</div>
+							<div class="text">${vo.departure_area}</div>
 						</div>
 						<div class="end">
 							<div class="round">도착</div>

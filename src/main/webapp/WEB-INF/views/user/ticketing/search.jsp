@@ -66,7 +66,7 @@ let day = today.getDay();  // 요일
 							<!-- bus -->
 							<c:forEach var="li" items="${li}">
 							<div class="bus">
-								<span class="start-area">${li.area}</span>
+								<span class="start-area">${li.departure_area}</span>
 								<span class="start-time">${li.departure_time}</span>
 								<span class="destination">${li.destination}</span>
 								<span class="price">${li.ticket_price}</span>

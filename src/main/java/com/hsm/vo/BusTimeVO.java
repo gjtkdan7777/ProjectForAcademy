@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class BusTimeVO {
-	private String area;
 	private String departure_time;
+	private String departure_area;
 	private String destination;
 	private int ticket_price;
 	private int remaining_seats;

@@ -20,7 +20,7 @@
 	     SELECT * FROM ${area}_time_tb
 	</select>
 	<select id="busChoose" resultType="com.hsm.vo.BusTimeVO">
-	     SELECT * FROM ${area}_time_tb WHERE bus_name = #{bus_name}
+	     SELECT * FROM ${departure_area}_time_tb WHERE bus_name = #{bus_name}
 	</select>
 	<select id="busSeat" resultType="com.hsm.vo.SeatVO">
 		SELECT * FROM ${bus_name}
