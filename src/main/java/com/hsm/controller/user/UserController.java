@@ -32,38 +32,55 @@ public class UserController {
 	
 	// user main page
 	@RequestMapping(value = "/mainf")
-	public ModelAndView main(ModelAndView mv) {
-		mv.setViewName("user/main/main");
-		return mv;
+	public String main() {
+		return "user/main/main";
 	}
-	
 	// user login page
 	@RequestMapping(value = "/loginf")
-	public ModelAndView login(ModelAndView mv) {
-		mv.setViewName("user/login/login");
-		return mv;
+	public String login() {
+		return "user/login/login";
 	}
-	
 	// user find id page
 	@RequestMapping(value = "/findIDf")
-	public ModelAndView findID(ModelAndView mv) {
-		mv.setViewName("user/login/findID");
-		return mv;
+	public String findID() {
+		return "user/login/findID";
 	}
-	
 	// user find pw page
 	@RequestMapping(value = "/findPWf")
-	public ModelAndView findPW(ModelAndView mv) {
-		mv.setViewName("user/login/findPW");
-		return mv;
+	public String findPW() {
+		return "user/login/findPW";
 	}
-
 	// user join page
 	@RequestMapping(value = "/joinf")
-	public ModelAndView joinf(ModelAndView mv) {
-		mv.setViewName("user/join/join");
-		return mv;
+	public String joinf() {
+		return "user/join/join";
 	}
+	@RequestMapping(value = "/changeNumberf")
+	public String changeNumberf() {
+		return "user/myPage/changeNumber";
+	}
+	@RequestMapping(value = "/changePWf")
+	public String changePWf() {
+		return "user/myPage/changePW";
+	}
+	@RequestMapping(value = "/ticketList")
+	public String ticketList() {
+		return "user/myPage/ticketList";
+	}
+	@RequestMapping(value = "/terminal")
+	public String terminal() {
+		return "user/terminal/terminal";
+	}
+	@RequestMapping(value = "/qnaList")
+	public String qnaList() {
+		return "user/qna/list";
+	}
+	@RequestMapping(value = "/qnaRegister")
+	public String qnaRegister() {
+		return "user/qna/register";
+	}
+	
+	
 	
 	// user ticketing search page
 	@RequestMapping(value = "/search")
@@ -95,45 +112,57 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/myPage")
-	public ModelAndView myPage(ModelAndView mv) {
-		mv.setViewName("user/myPage/home");
-		return mv;
+	public String myPage(Model model,UserVO vo,HttpServletRequest request) {
+		vo.setEmail((String)request.getSession().getAttribute("loginID"));
+		model.addAttribute("vo", service.selectOne(vo));
+		return "user/myPage/home";
+	}
+	
+	
+	@RequestMapping(value = "/changePW")
+	public String changePW(Model model, HttpServletRequest request, UserVO vo, 
+				RedirectAttributes redirect, HttpSession session) {
+		String password = (String)request.getSession().getAttribute("loginPassword");
+		String msg = "";
+		String url = "user/myPage/changePW";
+		if(password!=null) {
+			if(password.equals(request.getParameter("passwordCh"))) {
+				vo.setEmail((String)request.getSession().getAttribute("loginID"));
+				vo.setPassword(request.getParameter("password"));
+				service.changePassword(vo);
+				session.invalidate();
+				msg = "비밀번호 변경 성공!! 로그인후 이용하세요";
+				url = "redirect:loginf";
+			}else {
+				msg= "비밀번호가 틀렸습니다.";
+			}
+		}else {
+			msg = "로그인중이 아닙니다.";
+		}
+		redirect.addFlashAttribute("vo", vo);
+		redirect.addFlashAttribute("msg", msg);
+		return url;
 	}
 	
 	@RequestMapping(value = "/changeNumber")
-	public ModelAndView changeNumber(ModelAndView mv) {
-		mv.setViewName("user/myPage/changeNumber");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/changePW")
-	public ModelAndView changePW(ModelAndView mv) {
-		mv.setViewName("user/myPage/changePW");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/ticketList")
-	public ModelAndView ticketList(ModelAndView mv) {
-		mv.setViewName("user/myPage/ticketList");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/terminal")
-	public ModelAndView terminal(ModelAndView mv) {
-		mv.setViewName("user/terminal/terminal");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/qnaList")
-	public ModelAndView qnaList(ModelAndView mv) {
-		mv.setViewName("user/qna/list");
-		return mv;
-	}
-	
-	@RequestMapping(value = "/qnaRegister")
-	public ModelAndView qnaRegister(ModelAndView mv) {
-		mv.setViewName("user/qna/register");
-		return mv;
+	public String changeNumber(Model model, HttpServletRequest request, UserVO vo, 
+			RedirectAttributes redirect, HttpSession session) {
+		String password = (String)request.getSession().getAttribute("loginPassword");
+		String url = "redirect:changeNumberf";
+		String msg = "";
+		if(password!=null) {
+			if(password.equals(vo.getPassword())) {
+				vo.setEmail((String)request.getSession().getAttribute("loginID"));
+				service.changePhone(vo);
+				url = "redirect:myPage";
+			}else {
+				msg= "비밀번호가 틀렸습니다.";
+			}
+		}else {
+			msg = "로그인중이 아닙니다.";
+		}
+		redirect.addFlashAttribute("msg", msg);
+		return url;
 	}
 	
 	@RequestMapping(value = "/join")
@@ -164,6 +193,7 @@ public class UserController {
 		if(vo!=null) {
 			if(vo.getPassword().equals(password)) {
 				request.getSession().setAttribute("loginID", vo.getEmail());
+				request.getSession().setAttribute("loginPassword", vo.getPassword());
 				url = "redirect:mainf";
 			}else {
 				msg = "Password를 확인해 주세요.";
@@ -186,6 +216,33 @@ public class UserController {
 		}
 		rttr.addFlashAttribute("msg", msg);
 		return "redirect:loginf";
+	}
+	
+	@RequestMapping(value = "/secession")
+	public String seCession(HttpServletRequest request, HttpSession session, 
+				 UserVO vo, RedirectAttributes redirect) {
+		String msg = null;
+//		로그인한 아이디 & 비밀번호
+		String email = (String)session.getAttribute("loginID");
+		String password = (String)session.getAttribute("loginPassword");
+		//입력한 비밀번호
+		String passwordCh = (String)request.getParameter("password");
+		String url = "redirect:myPage";
+		if(password.equals(passwordCh)){
+			if (session !=null && session.getAttribute("loginID") !=null) {
+				vo.setEmail(email);
+				service.secession(vo);
+				session.invalidate();
+				msg = "회원탈퇴 완료.";
+				url = "redirect:mainf";
+			}else {
+				msg = "로그인을 한 후 이용해주세요.";
+			}
+		}else {
+			msg = "비밀번호를 다시 입력해주세요.";
+		}
+		redirect.addFlashAttribute("msg", msg);
+		return url;
 	}
 	
 	

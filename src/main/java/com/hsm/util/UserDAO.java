@@ -35,4 +35,13 @@ public class UserDAO {
 	public BusTimeVO busChoose(BusTimeVO vo) {
 		return sqlSession.selectOne(NS+"busChoose",vo);
 	}
+	public int changePassword(UserVO vo) {
+		return sqlSession.update(NS+"changePassword",vo);
+	}
+	public int changePhone(UserVO vo) {
+		return sqlSession.update(NS+"changePhone",vo);
+	}
+	public int secession(UserVO vo) {
+		return sqlSession.delete(NS+"secession",vo);
+	}
 }

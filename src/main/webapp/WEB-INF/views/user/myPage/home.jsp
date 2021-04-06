@@ -18,9 +18,22 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="../resources/myLib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	
+function secession() {
+	var password = $('#password').val();
+	location.href="secession?password="+password;
 
+}
+</script>
 </head>
 <body>
+	<c:if test="${msg!=null}">
+		<script>
+			alert('${msg}');
+		</script>
+	</c:if>
 	<!-- modal -->
 	<div id="withdrawal" class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -38,7 +51,7 @@
 					<div class="border-box">
 						<div class="input-box">
 							<label for="user-pw">비밀번호</label>
-							<input type="text" id="user-pw" placeholder="현재 사이트에 등록된 비밀번호를 입력하세요."/>
+							<input type="password"  id="password" name="password" placeholder="비밀번호를 입력하세요."/>
 						</div>
 					</div>
 				</div>
@@ -46,8 +59,8 @@
 				<!-- modal-footer -->
 				<div class="modal-footer">
 					<ul>
-						<li><input type="button" value="취소"/></li>
-						<li><input type="button" value="회원탈퇴"/></li>
+						<li><input type="button" data-dismiss="modal" value="취소"/></li>
+						<li><input type="button" value="회원탈퇴" onclick="return secession()"/></li>
 					</ul>
 				</div>
 				<!-- // modal-footer -->
@@ -80,17 +93,17 @@
 			<div class="content-box">
 				<div class="info-box">
 					<p class="sm-text">계정정보</p>
-					<span class="m-text">test@test.com</span>
+					<span class="m-text">${vo.email}</span>
 					<div class="page-move">
-						<a href="changePW" class="first">비밀번호 변경 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
-						<a href="ticketList" data-toggle="modal" data-target="#withdrawal">회원탈퇴 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
+						<a href="changePWf" class="first">비밀번호 변경 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
+						<a href="" data-toggle="modal" data-target="#withdrawal">회원탈퇴 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
 					</div>
 				</div>
 				<div class="info-box">
 					<p class="sm-text">휴대폰번호</p>
-					<span class="m-text">01099998888</span>
+					<span class="m-text">${vo.phone}</span>
 					<div class="page-move">
-						<a href="changeNumber">휴대폰번호 변경 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
+						<a href="changeNumberf">휴대폰번호 변경 <img src="../resources/user/images/myPage/home/arrow.png" alt="arrow" title="arrow" /></a>
 					</div>
 				</div>
 			</div>

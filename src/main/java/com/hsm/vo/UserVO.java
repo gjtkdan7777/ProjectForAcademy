@@ -10,4 +10,5 @@ public class UserVO {
 	private String birthd;
 	private int point;
 	private String registration_date;
+	
 }

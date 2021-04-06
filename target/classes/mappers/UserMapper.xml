@@ -25,4 +25,13 @@
 	<select id="busSeat" resultType="com.hsm.vo.SeatVO">
 		SELECT * FROM ${bus_name}
 	</select>	
+	<update id="changePassword">
+		UPDATE member_tb SET password=#{password} WHERE email = #{email}
+	</update>
+	<update id="changePhone">
+		UPDATE member_tb SET phone=#{phone} WHERE email = #{email}
+	</update>
+	<delete id="secession">
+		DELETE FROM member_tb WHERE email=#{email}
+	</delete>
 </mapper>  

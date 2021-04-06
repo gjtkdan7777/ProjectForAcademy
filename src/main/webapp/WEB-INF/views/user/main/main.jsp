@@ -31,6 +31,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${msg!=null}">
+		<script>
+			alert('${msg}');
+		</script>
+	</c:if>
 	<!-- side-manu -->
 	<c:import url="../common/sideMenu.jsp"></c:import>
 	<!-- // side-manu -->

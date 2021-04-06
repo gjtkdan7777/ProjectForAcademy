@@ -13,4 +13,7 @@ public interface UserService {
 	public List<BusTimeVO> busTimeList(AllBusVO vo);
 	public List<BusTimeVO> busSeat(BusTimeVO vo);
 	public BusTimeVO busChoose(BusTimeVO vo);
+	public int changePassword(UserVO vo);
+	public int changePhone(UserVO vo);
+	public int secession(UserVO vo);
 }

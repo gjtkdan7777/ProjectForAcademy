@@ -55,6 +55,7 @@ function pwCheck() {
 		return true;
 	}
 } //pwCheck
+
 function pw2Check() {
 	var password = $("#password").val();
 	var password2 = $('#password2').val();

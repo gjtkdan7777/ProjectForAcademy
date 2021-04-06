@@ -36,4 +36,13 @@ public class UserServiceImpl implements UserService{
 	public BusTimeVO busChoose(BusTimeVO vo){
 		return dao.busChoose(vo);
 	}
+	public int changePassword(UserVO vo){
+		return dao.changePassword(vo);
+	}
+	public int changePhone(UserVO vo){
+		return dao.changePhone(vo);
+	}
+	public int secession(UserVO vo){
+		return dao.secession(vo);
+	}
 }

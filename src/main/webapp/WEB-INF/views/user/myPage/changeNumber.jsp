@@ -9,8 +9,47 @@
 <c:import url="../common/userSettings.jsp"></c:import>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="../resources/user/css/myPage/changeNumber.css">
+<script src="../resources/myLib/jquery-3.2.1.min.js"></script>
+<script src="../resources/myLib/inCheck.js"></script>
+<script>
+var pCheck=false;
+var poCheck=false;
+
+$(function(){
+	$('#password').focusout(function(){
+		pCheck=pwCheck();
+	}); // password
+	
+	$('#phone').focusout(function() {
+		poCheck=phoCheck();
+	}); //password2
+});
+	
+function inCheck() {
+	if (pCheck==false) {
+		$('#pMessage').html(' Password 를 확인 하세요 ~~');
+		$('#password').focus();
+	}
+	if (pCheck==true && poCheck==true) {
+		if(confirm('변경하시겠습니까?')){
+			return true;
+		}else{
+			return false;
+		}
+	}else {
+      return false;   // submit 무효화 
+	}
+} //inCheck
+	
+ //ready
+</script>
 </head>
 <body>
+	<c:if test="${msg!=null}">
+		<script>
+			alert('${msg}');
+		</script>
+	</c:if>
 	<!-- side-manu -->
 	<c:import url="../common/sideMenu.jsp"></c:import>
 	<!-- // side-manu -->
@@ -28,41 +67,31 @@
 		<section id="content">
 			<h3>현재 사이트에 등록된 비밀번호와 변경하실 새로운 휴대폰 번호를 입력하세요.</h3>
 			<!-- content-box -->
+			<form action="changeNumber" method="post">
 			<div class="content-box">
 				<!-- change-pn-box -->
 				<div class="change-pn-box">
 					<div class="area">
 						<div class="input-box">
 							<label for="pn">비밀번호</label>
-							<input type="text" id="pn" placeholder="비밀번호를 입력하세요."/>
+							<input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요."/>
+							<br><span  id="pMessage" class="message"></span>
 						</div>
 					</div>
 					<div class="area">
 						<div class="input-box">
 							<label for="phone">휴대폰번호</label>
-							<input type="text" id="phone" placeholder="휴대폰번호를 입력하세요."/>
+							<input type="text" id="phone" name="phone" placeholder="휴대폰번호를 입력하세요."/>
+							<br><span  id="phoMessage" class="message"></span>
 						</div>
 					</div>
 				</div>
 				<!-- // change-pn-box -->
 			</div>
 			<!-- // content-box -->
-			<input type="button" class="change-pn-btn" value="인증번호 발송" />
+			<input type="submit" class="change-pn-btn" value="인증번호 발송" onclick="return inCheck()"/>
 			<!-- content-box -->
-			<div class="content-box result">
-				<!-- result-box -->
-				<div class="result-box">
-					<div class="area">
-						<div class="input-box">
-							<label for="phone">휴대폰번호</label>
-							<input type="text" id="phone" placeholder="휴대폰번호를 입력하세요."/>
-						</div>
-					</div>
-				</div>
-				<!-- // result-box -->	
-			</div>
-			<!-- // content-box -->
-			<input type="button" class="check-btn result" value="확인" />
+		</form>
 		</section>
 		<!-- // content -->
 		<!-- footer -->
