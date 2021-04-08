@@ -44,51 +44,24 @@
 					</div>
 					<div class="data-body-box">
 						<!-- item -->
+						<c:forEach var="li" items="${li}">
 						<div class="itme">
 							<div class="item-head">
 								<span class="icon">Q.</span>
-								<span class="title">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
+								<span class="title">${li.content}</span>
 								<img src="../resources/user/images/qna/arrow_faq.png" alt="arrow" title="arrow" />
 							</div>
 							<div class="item-body">
 								<span class="icon">A.</span>
-								<span class="text">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
+							<c:if test="${li.answer_content!=null}">
+								<span class="text">${li.answer_content}</span>
+							</c:if>
+							<c:if test="${li.answer_content==null}">
+								<span class="text">아직 답변이 등록되지 않았습니다.</span>
+							</c:if>
 							</div>
 						</div>
-						<!-- // item -->
-						<div class="itme">
-							<div class="item-head">
-								<span class="icon">Q.</span>
-								<span class="title">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-								<img src="../resources/user/images/qna/arrow_faq.png" alt="arrow" title="arrow" />
-							</div>
-							<div class="item-body">
-								<span class="icon">A.</span>
-								<span class="text">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-							</div>
-						</div>
-						<div class="itme">
-							<div class="item-head">
-								<span class="icon">Q.</span>
-								<span class="title">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-								<img src="../resources/user/images/qna/arrow_faq.png" alt="arrow" title="arrow" />
-							</div>
-							<div class="item-body">
-								<span class="icon">A.</span>
-								<span class="text">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-							</div>
-						</div>
-						<div class="itme">
-							<div class="item-head">
-								<span class="icon">Q.</span>
-								<span class="title">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-								<img src="../resources/user/images/qna/arrow_faq.png" alt="arrow" title="arrow" />
-							</div>
-							<div class="item-body">
-								<span class="icon">A.</span>
-								<span class="text">예매 가능 기간 및 명절 연휴 예매 기간은 언제입니까?</span>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 				<!-- // data-box -->

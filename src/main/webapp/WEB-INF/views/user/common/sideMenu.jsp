@@ -5,7 +5,7 @@
 <div id="side-menu">
 	<!-- logo -->
 	<div class="logo">
-		<a href="main">
+		<a href="mainf">
 			<img src="../resources/common/images/logo_pc.png" alt="logo" title="logo" />
 			<span>고속버스통합예매</span>
 		</a>

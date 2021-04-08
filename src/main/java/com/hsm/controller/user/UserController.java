@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hsm.service.UserService;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
+import com.hsm.vo.QnAVO;
 import com.hsm.vo.UserVO;
 
 /**
@@ -67,14 +68,7 @@ public class UserController {
 	public String ticketList() {
 		return "user/myPage/ticketList";
 	}
-	@RequestMapping(value = "/terminal")
-	public String terminal() {
-		return "user/terminal/terminal";
-	}
-	@RequestMapping(value = "/qnaList")
-	public String qnaList() {
-		return "user/qna/list";
-	}
+	
 	@RequestMapping(value = "/qnaRegister")
 	public String qnaRegister() {
 		return "user/qna/register";
@@ -188,7 +182,7 @@ public class UserController {
 	public String login(UserVO vo, HttpServletRequest request, RedirectAttributes rttr) {
 		String password = vo.getPassword();
 		String url = "redirect:loginf";
-		String msg = "";
+		String msg = null;
 		vo = service.selectOne(vo);
 		if(vo!=null) {
 			if(vo.getPassword().equals(password)) {
@@ -207,14 +201,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/logout")
-	public String logout(HttpServletRequest request, HttpSession session, RedirectAttributes rttr) {
+	public String logout(HttpServletRequest request, HttpSession session, RedirectAttributes redirect) {
 		session = request.getSession(false);
 		String msg = null;
 		if (session !=null && session.getAttribute("loginID") !=null) {
 			session.invalidate();
 			msg = "로그아웃 완료";
 		}
-		rttr.addFlashAttribute("msg", msg);
+		redirect.addFlashAttribute("msg", msg);
 		return "redirect:loginf";
 	}
 	
@@ -231,6 +225,7 @@ public class UserController {
 		if(password.equals(passwordCh)){
 			if (session !=null && session.getAttribute("loginID") !=null) {
 				vo.setEmail(email);
+				service.qnaDelete(vo);
 				service.secession(vo);
 				session.invalidate();
 				msg = "회원탈퇴 완료.";
@@ -245,6 +240,40 @@ public class UserController {
 		return url;
 	}
 	
+	@RequestMapping(value = "/terminal")
+	public String terminal(AllBusVO vo, Model model) {
+		List<AllBusVO> list = new ArrayList<AllBusVO>();
+		System.out.println(vo);
+		if(vo.getArea()==null || vo.getArea().equals("전체")) {
+			list = service.busList();
+			//터미널 정보가 있으면 & 설렉트로 지역을 변경 했으면
+		}else {
+			// 전체일때
+			list = service.areaBusList(vo);
+		}
+		model.addAttribute("li", list);
+		return "user/terminal/terminal";
+	}
 	
+	@RequestMapping(value = "/contentSub")
+	public String contentSub(UserVO uvo, QnAVO qvo, HttpSession session) {
+		qvo.setEmail((String)session.getAttribute("loginID"));
+		String url = "redirect:qnaList";
+		String msg = null;
+		if(qvo.getEmail().equals(null)) {
+			msg = "로그인 후 이용하실 수 있습니다";
+			url = "redirect:loginf";
+		}else {
+			service.userContentInsert(qvo);
+		}
+		return url;
+	}
+	@RequestMapping(value = "/qnaList")
+	public String qnaList(Model model) {
+		List<QnAVO> list = new ArrayList<QnAVO>();
+		list = service.qnaList();
+		model.addAttribute("li", list);
+		return "user/qna/list";
+	}
 	
 }

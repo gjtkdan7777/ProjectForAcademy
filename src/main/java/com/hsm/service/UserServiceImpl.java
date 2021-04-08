@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.hsm.util.UserDAO;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
+import com.hsm.vo.QnAVO;
 import com.hsm.vo.UserVO;
 
 @Service
@@ -24,8 +25,14 @@ public class UserServiceImpl implements UserService{
 	public UserVO selectOne(UserVO vo) {
 		return dao.selectOne(vo);
 	}
-	public List<AllBusVO> busList(AllBusVO vo){
-		return dao.busList(vo);
+	public List<AllBusVO> busList(){
+		return dao.busList();
+	}
+	public List<QnAVO> qnaList(){
+		return dao.qnaList();
+	}
+	public List<AllBusVO> areaBusList(AllBusVO vo){
+		return dao.areaBusList(vo);
 	}
 	public List<BusTimeVO> busTimeList(AllBusVO vo){
 		return dao.busTimeList(vo);
@@ -44,5 +51,11 @@ public class UserServiceImpl implements UserService{
 	}
 	public int secession(UserVO vo){
 		return dao.secession(vo);
+	}
+	public int qnaDelete(UserVO vo){
+		return dao.qnaDelete(vo);
+	}
+	public int userContentInsert(QnAVO vo){
+		return dao.userContentInsert(vo);
 	}
 }

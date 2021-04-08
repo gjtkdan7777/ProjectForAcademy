@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncs.AdminMapper">
+	
+	
+	<select id="userList" resultType="com.hsm.vo.Search">
+		SELECT * FROM member_tb 
+		<where>
+		<if test="searchValue != null">
+			<bind name="val" value="'%'+searchValue+'%'"/>
+		</if>
+		<choose>
+			<when test='searchType == "e"'>
+				email LIKE #{val}
+			</when>
+			<when test='searchType == "p"'>
+				phone LIKE #{val}
+			</when>
+		</choose>
+		</where>
+	</select>
+	
+	<delete id="deleteUser">
+		DELETE FROM member_tb WHERE email = #{email}
+	</delete>
+	
+	
+	
+</mapper>  

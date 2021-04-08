@@ -9,6 +9,16 @@
 <c:import url="../common/userSettings.jsp"></c:import>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="../resources/user/css/qna/register.css">
+<script src="../resources/myLib/jquery-3.2.1.min.js"></script>
+<script>
+	$(function(){
+		$('#submit').on("click",function(){
+			var content = $('#textarea').val();
+			location.href="contentSub?content="+content;
+		});// click
+	}); // ready
+	
+</script>
 </head>
 <body>
 	<!-- side-manu -->
@@ -37,11 +47,11 @@
 			<!-- content-box -->
 			<div class="content-box">
 				<!-- data-box -->
-				<div class="data-box">
-					<textarea placeholder="문의 내역을 등록해 주세요."></textarea>
+				<div class="data-box" id="content">
+					<textarea id="textarea" placeholder="문의 내역을 등록해 주세요."></textarea>
 				</div>
 				<!-- // data-box -->
-				<input type="button" class="register-btn" value="등록"/>
+				<input type="button" class="register-btn" value="등록" id="submit"/>
 			</div>
 			<!-- // content-box -->
 		</section>

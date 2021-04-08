@@ -56,8 +56,8 @@
 						</div>
 </form>
 						<div class="find-box">
-							<a href="findID"><span class="img"></span>아이디찾기</a> 
-							<a href="findPW"><span class="img"></span>비밀번호 찾기</a>
+							<a href="findIDf"><span class="img"></span>아이디찾기</a> 
+							<a href="findPWf"><span class="img"></span>비밀번호 찾기</a>
 						</div>
 						</c:if>
 						<c:if test="${loginID!=null}">

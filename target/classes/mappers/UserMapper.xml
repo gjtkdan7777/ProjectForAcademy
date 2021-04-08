@@ -16,6 +16,14 @@
 	    SELECT * FROM all_bus_tb
 	</select>
 	
+	<select id="qnaList" resultType="com.hsm.vo.QnAVO">
+	    SELECT * FROM questions_tb
+	</select>
+	
+	<select id="areaBusList" resultType="com.hsm.vo.AllBusVO">
+	    SELECT * FROM all_bus_tb WHERE area=#{area}
+	</select>
+	
 	<select id="busTimeList" resultType="com.hsm.vo.BusTimeVO">
 	     SELECT * FROM ${area}_time_tb
 	</select>
@@ -34,4 +42,17 @@
 	<delete id="secession">
 		DELETE FROM member_tb WHERE email=#{email}
 	</delete>
+	
+	<insert id="userContentInsert">
+	   <selectKey keyProperty="seq" resultType="int" order="BEFORE">
+	     SELECT NVL(MAX(seq),0)+1 FROM questions_tb
+	   </selectKey>
+	  	 INSERT INTO questions_tb VALUES(
+	     #{seq}, #{email}, #{content}, sysdate, '', '')
+	</insert>
+	<delete id="qnaDelete">
+		DELETE FROM questions_tb WHERE email=#{email}
+	</delete>
+	
+	
 </mapper>  
