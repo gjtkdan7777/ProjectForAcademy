@@ -5,6 +5,7 @@ import java.util.List;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
 import com.hsm.vo.QnAVO;
+import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
 public interface UserService {
@@ -21,4 +22,5 @@ public interface UserService {
 	public int secession(UserVO vo);
 	public int qnaDelete(UserVO vo);
 	public int userContentInsert(QnAVO vo);
+	
 }

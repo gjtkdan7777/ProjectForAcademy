@@ -72,12 +72,18 @@
 							<div class="card-body">
 								<h3>Q&#38;A 답변 등록</h3>
 								<br>
-								<form class="forms-sample">
+								<form class="forms-sample" action="insertAnswer">
 									<!-- form-group -->
+									<div class="form-group row" hidden="true">
+										<label for="test01" class="col-sm-2 col-form-label">seq</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="test01" name="seq" value="${vo.seq}" readonly="readonly">
+										</div>
+									</div>
 									<div class="form-group row">
 										<label for="test01" class="col-sm-2 col-form-label">작성자</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test01" value="작성자" readonly="readonly">
+											<input type="text" class="form-control" id="test01" value="${vo.email}" readonly="readonly">
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -85,7 +91,7 @@
 									<div class="form-group row">
 										<label for="test02" class="col-sm-2 col-form-label">날짜</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test02" value="2020-13-13" readonly="readonly">
+											<input type="text" class="form-control" id="test02" value="${vo.registration_date}" readonly="readonly">
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -93,7 +99,7 @@
 									<div class="form-group row">
 										<label for="test03" class="col-sm-2 col-form-label">문의내역</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" id="test03" rows="5" readonly="readonly"></textarea>
+											<textarea class="form-control" id="test03" rows="5" readonly="readonly">${vo.content}</textarea>
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -101,11 +107,11 @@
 									<div class="form-group row">
 										<label for="test04" class="col-sm-2 col-form-label">답변</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" id="test04" rows="5"></textarea>
+											<textarea class="form-control" id="test04" name="answer_content" rows="5"></textarea>
 										</div>
 									</div>
 									<!-- //form-group -->
-									<input type="button" style="float: right" class="btn btn-success mr-2" value="등록">
+									<input type="submit" style="float: right" class="btn btn-success mr-2" value="등록">
 								</form>
 							</div>
 						</div>

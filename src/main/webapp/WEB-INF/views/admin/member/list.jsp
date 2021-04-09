@@ -126,9 +126,10 @@ $(function() {
 												<th>${li.email}</th>
 												<th>${li.phone}</th>
 												<th>${li.birthd}</th>
-												<td>1,000</td>
-												<td><a class="btn btn-primary" href="MemberModify"
-													style="color: #fff">수정</a></td>
+												<td>${li.point}</td>
+												<td>
+													<a class="btn btn-primary" href="MemberModify?email=${li.email}" style="color: #fff">수정</a>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>

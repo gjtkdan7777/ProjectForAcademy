@@ -50,6 +50,7 @@
 	  	 INSERT INTO questions_tb VALUES(
 	     #{seq}, #{email}, #{content}, sysdate, '', '')
 	</insert>
+	
 	<delete id="qnaDelete">
 		DELETE FROM questions_tb WHERE email=#{email}
 	</delete>

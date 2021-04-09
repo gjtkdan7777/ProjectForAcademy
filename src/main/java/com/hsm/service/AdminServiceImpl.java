@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hsm.util.AdminDAO;
+import com.hsm.vo.QnAVO;
 import com.hsm.vo.Search;
+import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
 @Service
@@ -22,5 +24,27 @@ public class AdminServiceImpl implements AdminService{
 	public int deleteUser(UserVO vo) {
 		return dao.deleteUser(vo);
 	}
-
+	public int deleteQuestion(QnAVO vo) {
+		return dao.deleteQuestion(vo);
+	}
+	
+	public UserVO selectOne(UserVO vo) {
+		return dao.selectOne(vo);
+	}
+	public int update(UserVO vo) {
+		return dao.update(vo);
+	}
+	public List<QnAVO> qnaList(){
+		return dao.qnaList();
+	}
+	public QnAVO selectQnA(QnAVO vo) {
+		return dao.selectQnA(vo);
+	}
+	public int insertAnswer(QnAVO vo) {
+		return dao.insertAnswer(vo);
+		
+	}
+	public List<TicketingVO> TicketingList() {
+		return dao.TicketingList();
+	}
 }

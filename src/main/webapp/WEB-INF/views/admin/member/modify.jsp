@@ -72,20 +72,20 @@
 							<div class="card-body">
 								<h3>회원 수정</h3>
 								<br>
-								<form class="forms-sample">
+								<form class="update" action="update">
 									<!-- form-group -->
 									<div class="form-group row">
 										<label for="test01" class="col-sm-2 col-form-label">email</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test01" value="test@test.com" readonly="readonly">
+											<input type="text" class="form-control" name="email" value="${vo.email}" readonly="readonly">
 										</div>
 									</div>
 									<!-- //form-group -->
 									<!-- form-group -->
 									<div class="form-group row">
-										<label for="test05" class="col-sm-2 col-form-label">pw</label>
+										<label for="test05" class="col-sm-2 col-form-label">비밀번호</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test05" value="1234!">
+											<input type="password" class="form-control" name="password" value="${vo.password}">
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -93,7 +93,7 @@
 									<div class="form-group row">
 										<label for="test02" class="col-sm-2 col-form-label">phone</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test02" value="010-1234-1234">
+											<input type="text" class="form-control" name="phone" value="${vo.phone}">
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -101,7 +101,7 @@
 									<div class="form-group row">
 										<label for="test03" class="col-sm-2 col-form-label">birthd</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="test03" value="1999-99-99">
+											<input type="text" class="form-control" name="birthd" value="${vo.birthd}">
 										</div>
 									</div>
 									<!-- //form-group -->
@@ -109,13 +109,11 @@
 									<div class="form-group row">
 										<label for="test04" class="col-sm-2 col-form-label">point</label>
 										<div class="col-sm-10">
-											<select id="test04"  class="form-control">
-												<option>a</option>
-											</select>
+											<input type="text" class="form-control" name="point" value="${vo.point}">
 										</div>
 									</div>
 									<!-- //form-group -->
-									<input type="button" style="float: right" class="btn btn-success mr-2" value="등록">
+									<input type="submit" style="float: right" class="btn btn-success mr-2" value="등록">
 								</form>
 							</div>
 						</div>

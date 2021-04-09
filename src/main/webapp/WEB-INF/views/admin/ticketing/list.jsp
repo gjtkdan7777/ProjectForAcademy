@@ -84,44 +84,36 @@
 								<!-- table -->
 								<table class="table table-bordered" style="table-layout: fixed;">
 									<thead>
+									
 										<tr>
 											<th><input type="checkbox"></th>
 											<th>email</th>
 											<th>출발</th>
 											<th>도착</th>
 											<th>날짜</th>
-											<th>매수</th>
+											<!-- <th>매수</th> -->
 											<th>좌석</th>
 											<th>상태</th>
 											<th>비고</th>
 										</tr>
+									
 									</thead>
 									<tbody>
+									<c:forEach var="li" items="${li}">
 										<tr>
-											<td><input type="checkbox"></td>
-											<td>test@gmail.com</td>
-											<td>서울</td>
-											<td>경기</td>
-											<td>2020-19-19</td>
-											<td>2명</td>
-											<td>5번,8번</td>
-											<td>예매완료</td>
+											<td><input type="checkbox" value="ticketing_number"></td>
+											<td>${li.email}</td>
+											<td>${li.departure_area}</td>
+											<td>${li.destination}</td>
+											<td>${li.departure_date}</td>
+											<%-- <td>${li.seat_number}</td> --%>
+											<td>${li.seat_number}</td>
+											<td>${li.ticketion_status}</td>
 											<td>
 												<button type="button" class="btn btn-danger">예매 취소</button>
 											</td>
 										</tr>
-										<tr>
-											<td><input type="checkbox"></td>
-											<td>test@gmail.com</td>
-											<td>서울</td>
-											<td>경기</td>
-											<td>2020-19-19</td>
-											<td>2명</td>
-											<td>5번,8번</td>
-											<td>취소</td>
-											<td>
-											</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 								<!-- //table -->

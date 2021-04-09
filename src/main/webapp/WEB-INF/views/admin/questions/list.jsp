@@ -10,8 +10,32 @@
 <style type="text/css">
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 </style>
+<script src="../resources/myLib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	//최상단 체크박스 클릭
+	$("#checkall").click(function() {
+		//클릭되었으면
+		if ($("#checkall").prop("checked")) {
+			//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+			$("input[name=chk]").prop("checked", true);
+			//클릭이 안되있으면
+		} else {
+			//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+			$("input[name=chk]").prop("checked", false);
+		}
+	});
+
+});
+	
+</script>
 </head>
 <body>
+<c:if test="${msg!=null}">
+	<script type="text/javascript">
+		alert('${msg}');
+	</script>
+</c:if>
 	<div class="container-scroller">
 		<!-- header -->
 		<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -84,11 +108,12 @@
 									<input type="button" class="btn btn-secondary" value="검색">
 								</div>
 								<!-- table -->
+								<form action="questionDelete">
 								<table class="table table-bordered" style="table-layout: fixed;">
 									<thead>
 										<tr>
-											<th><input type="checkbox"></th>
-											<th>#</th>
+											<th><input type="checkbox" id="checkall"></th>
+											<th>seq</th>
 											<th>작성자</th>
 											<th>문의내역</th>
 											<th>날짜</th>
@@ -96,26 +121,39 @@
 										</tr>
 									</thead>
 									<tbody>
+									<c:forEach var="li" items="${li}">
 										<tr>
-											<td><input type="checkbox"></td>
-											<td>1</td>
-											<td>test@gmail.com</td>
-											<td class="ellipsis" style="width:50%;">문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역문의내역</td>
-											<td>2021-12-12</td>
-											<td>
-												<a class="btn btn-primary" href="QuestionsDetail" style="color:#fff">답변 등록</a>
-											</td>
+											<td><input type="checkbox" name="chk" value="${li.seq}"></td>
+											<td>${li.seq}</td>
+											<td>${li.email}</td>
+											<td class="ellipsis" style="width:50%;">${li.content}</td>
+											<td>${li.registration_date}</td>
+											<c:if test="${li.answer_content==null}">
+												<td>
+													<a class="btn btn-primary" href="QuestionsDetail?seq=${li.seq}" style="color:#fff">답변 등록</a>
+												</td>
+											</c:if>
+											<c:if test="${li.answer_content!=null}">
+												<td>
+													<a class="btn btn-primary" style="color:#fff">답변 완료</a>
+												</td>
+											</c:if>
+											
 										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 								<!-- //table -->
+								
 								<br>
 								<div class="form-group">
-									<button type="button" class="btn btn-danger">삭제</button>
+									<button type="submit" class="btn btn-danger">삭제</button>
 								</div>
+								</form>
 							</div>
 						</div>
 					</div>
+					
 					<!-- //white box -->
 				</div>
 				<!-- //content box -->

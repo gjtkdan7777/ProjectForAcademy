@@ -5,7 +5,7 @@
 	
 	
 	<select id="userList" resultType="com.hsm.vo.Search">
-		SELECT * FROM member_tb 
+		SELECT * FROM member_tb ORDER BY registration_date DESC
 		<where>
 		<if test="searchValue != null">
 			<bind name="val" value="'%'+searchValue+'%'"/>
@@ -21,9 +21,40 @@
 		</where>
 	</select>
 	
+	<select id="TicketingList" resultType="com.hsm.vo.TicketingVO">
+		SELECT * FROM ticketing_detail_tb ORDER BY ticketing_number asc
+	</select>
+	
+	<select id="selectOne" resultType="com.hsm.vo.UserVO">
+		SELECT * FROM member_tb WHERE email = #{email}
+	</select>
+	
 	<delete id="deleteUser">
 		DELETE FROM member_tb WHERE email = #{email}
 	</delete>
+	
+	<delete id="deleteQuestion">
+		DELETE FROM questions_tb WHERE seq = ${seq}
+	</delete>
+	
+	<update id="update">
+	   UPDATE member_tb SET password=#{password}, 
+	   phone=#{phone}, birthd=#{birthd}, point=#{point} WHERE email=#{email}
+	</update>
+	
+	<select id="qnaList" resultType="com.hsm.vo.QnAVO">
+	    SELECT * FROM questions_tb ORDER BY seq ASC
+	</select>
+	
+	<select id="selectQnA" resultType="com.hsm.vo.QnAVO">
+	    SELECT * FROM questions_tb WHERE seq=${seq}
+	</select>
+	
+	<update id="insertAnswer">
+	   UPDATE questions_tb SET answer_content=#{answer_content}, 
+	   answer_date=sysdate WHERE seq=${seq}
+	</update>
+	
 	
 	
 	

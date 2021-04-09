@@ -9,6 +9,7 @@ import com.hsm.util.UserDAO;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
 import com.hsm.vo.QnAVO;
+import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
 @Service
@@ -58,4 +59,5 @@ public class UserServiceImpl implements UserService{
 	public int userContentInsert(QnAVO vo){
 		return dao.userContentInsert(vo);
 	}
+	
 }
