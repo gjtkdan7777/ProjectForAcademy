@@ -5,7 +5,7 @@
 	
 	
 	<select id="userList" resultType="com.hsm.vo.Search">
-		SELECT * FROM member_tb ORDER BY registration_date DESC
+		SELECT * FROM member_tb 
 		<where>
 		<if test="searchValue != null">
 			<bind name="val" value="'%'+searchValue+'%'"/>
@@ -19,6 +19,28 @@
 			</when>
 		</choose>
 		</where>
+		ORDER BY registration_date DESC
+	</select>
+	
+	<select id="qnaList" resultType="com.hsm.vo.QnASearch">
+	    SELECT * FROM questions_tb 
+	    <where>
+	    <if test="searchValue != null">
+	    	<bind name="val" value="'%'+searchValue+'%'"/>
+	    </if>
+	    <choose>
+	    	<when test='searchType == "e"'>
+	    		email LIKE #{val}
+	    	</when>
+	    	<when test='searchType == "c"'>
+	    		content LIKE #{val}
+	    	</when>
+	    	<when test='searchType == "d"'>
+	    		registration_date LIKE #{val}
+	    	</when>
+	    </choose>
+	    </where>
+	    ORDER BY seq ASC
 	</select>
 	
 	<select id="TicketingList" resultType="com.hsm.vo.TicketingVO">
@@ -42,9 +64,6 @@
 	   phone=#{phone}, birthd=#{birthd}, point=#{point} WHERE email=#{email}
 	</update>
 	
-	<select id="qnaList" resultType="com.hsm.vo.QnAVO">
-	    SELECT * FROM questions_tb ORDER BY seq ASC
-	</select>
 	
 	<select id="selectQnA" resultType="com.hsm.vo.QnAVO">
 	    SELECT * FROM questions_tb WHERE seq=${seq}

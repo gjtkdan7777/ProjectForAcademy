@@ -92,8 +92,8 @@
 			<!-- // main_content -->
 			<!-- main_content -->
 			<div class="main-content ticket">
-<c:if test="">
-				<!-- detail-ticket -->
+<c:if test="">				
+			<!-- detail-ticket -->
 				<div class="detail-ticket">
 					<div class="detail-ticket-head">
 						<p class="date">2021. 03. 31 (수) 17:00 출발</p>

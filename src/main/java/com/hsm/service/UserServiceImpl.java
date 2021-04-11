@@ -9,6 +9,7 @@ import com.hsm.util.UserDAO;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
 import com.hsm.vo.QnAVO;
+import com.hsm.vo.SeatVO;
 import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
@@ -38,8 +39,11 @@ public class UserServiceImpl implements UserService{
 	public List<BusTimeVO> busTimeList(AllBusVO vo){
 		return dao.busTimeList(vo);
 	}
-	public List<BusTimeVO> busSeat(BusTimeVO vo){
+	public List<SeatVO> busSeat(BusTimeVO vo){
 		return dao.busSeat(vo);
+	}
+	public List<TicketingVO> ticketList(UserVO vo) {
+		return dao.ticketList(vo);
 	}
 	public BusTimeVO busChoose(BusTimeVO vo){
 		return dao.busChoose(vo);
@@ -59,5 +63,19 @@ public class UserServiceImpl implements UserService{
 	public int userContentInsert(QnAVO vo){
 		return dao.userContentInsert(vo);
 	}
-	
+	public int buyTicket(TicketingVO vo) {
+		return dao.buyTicket(vo);
+	}
+	public int busSeatcount(TicketingVO vo) {
+		return dao.busSeatcount(vo);
+	}
+	public int seatUpdate(TicketingVO vo) {
+		return dao.seatUpdate(vo);
+	}
+	public int pay(UserVO vo) {
+		return dao.pay(vo);
+	}
+	public int addSeat(BusTimeVO vo) {
+		return dao.addSeat(vo);
+	}
 }

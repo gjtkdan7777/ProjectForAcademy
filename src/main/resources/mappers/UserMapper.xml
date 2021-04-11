@@ -27,11 +27,23 @@
 	<select id="busTimeList" resultType="com.hsm.vo.BusTimeVO">
 	     SELECT * FROM ${area}_time_tb
 	</select>
+	
 	<select id="busChoose" resultType="com.hsm.vo.BusTimeVO">
 	     SELECT * FROM ${departure_area}_time_tb WHERE bus_name = #{bus_name}
 	</select>
+	
 	<select id="busSeat" resultType="com.hsm.vo.SeatVO">
 		SELECT * FROM ${bus_name}
+	</select>	
+	
+	<!-- 좌석 있는지 확인 -->
+	<select id="busSeatcount" resultType="int">
+		SELECT COUNT(available_seat) FROM ${bus_name} 
+		WHERE available_seat = 1 AND 
+		seat_number IN 
+		<foreach collection="seatNumbers" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
 	</select>	
 	<update id="changePassword">
 		UPDATE member_tb SET password=#{password} WHERE email = #{email}
@@ -55,5 +67,47 @@
 		DELETE FROM questions_tb WHERE email=#{email}
 	</delete>
 	
+	<insert id="buyTicket">
+	 <selectKey keyProperty="ticketing_number" resultType="int" order="BEFORE">
+	     SELECT NVL(MAX(ticketing_number),00000000)+1 FROM ticketing_detail_tb
+	   </selectKey>
+		INSERT INTO ticketing_detail_tb 
+			VALUES(
+					#{ticketing_number},
+					#{email},
+					#{departure_area},
+					#{destination},
+					#{number_of_tickets},
+					#{seat_number},
+					#{departure_date},
+					1,
+					#{bus_name},
+					#{area_name}
+				)
+	</insert>
+	
+	<select id="ticketList" resultType="com.hsm.vo.TicketingVO">
+	    SELECT * FROM ticketing_detail_tb WHERE email = #{email}
+	</select>
+	<!--  -->
+	<update id="seatUpdate" >
+		UPDATE ${bus_name} 
+		SET 
+			available_seat = 1,
+			email = #{email}
+		 WHERE seat_number IN 
+		<foreach collection="seatNumbers" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</update>
+	<!-- user에 돈 업데이트 -->
+	<update id="pay">
+		UPDATE member_tb SET point = #{point} WHERE email = #{email}
+	</update>
+	
+	<update id="addSeat">
+		UPDATE ${area_name}_time_tb SET remaining_seats = ${remaining_seats} 
+		WHERE bus_name = #{bus_name}
+	</update>
 	
 </mapper>  

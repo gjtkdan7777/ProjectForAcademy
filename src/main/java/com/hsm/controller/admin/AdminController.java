@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.hsm.service.AdminService;
+import com.hsm.vo.QnASearch;
 import com.hsm.vo.QnAVO;
 import com.hsm.vo.Search;
 import com.hsm.vo.TicketingVO;
@@ -31,11 +31,6 @@ public class AdminController {
 	@Autowired
 	AdminService service;
 
-	
-
-	
-
-	
 
 	@RequestMapping(value = "/contentAns")
 	public String contentSub(UserVO uvo, QnAVO qvo, HttpSession session) {
@@ -46,7 +41,7 @@ public class AdminController {
 			msg = "로그인 후 이용하실 수 있습니다";
 			url = "redirect:loginf";
 		}else {
-//			service.adminContentInsert(qvo);
+			service.insertAnswer(qvo);
 		}
 		return url;
 	}
@@ -60,6 +55,14 @@ public class AdminController {
 				model.addAttribute("li", list);
 			}
 			return "admin/member/list";
+		}
+		
+		@RequestMapping(value = "/QuestionsList")
+		public String adminQuestionsList(Model model, QnASearch vo) {
+			List <QnASearch> list = new ArrayList<QnASearch>();
+			list = service.qnaList(vo);
+			model.addAttribute("li", list);
+			return "admin/questions/list";
 		}
 		
 		@RequestMapping(value = "/Delete")
@@ -96,13 +99,7 @@ public class AdminController {
 			return url;
 		}
 		
-		@RequestMapping(value = "/QuestionsList")
-		public String adminQuestionsList(Model model) {
-			List <QnAVO> list = new ArrayList<QnAVO>();
-			list = service.qnaList();
-			model.addAttribute("li", list);
-			return "admin/questions/list";
-		}
+		
 		
 		// admin member detail
 		@RequestMapping(value = "/QuestionsDetail")

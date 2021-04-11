@@ -25,6 +25,13 @@ $(function() {
 			$("input[name=chk]").prop("checked", false);
 		}
 	});
+	
+	$('#search-btn').click(
+			function() {
+				location.href = "QuestionsList?searchType="
+						+ $('#searchType').val() + "&searchValue="
+						+ $('#searchValue').val();
+			});
 
 });
 	
@@ -100,12 +107,14 @@ $(function() {
 								<h3>Q&#38;A 리스트</h3>
 								<br>
 								<div class="form-group">
-									<select id="test04" class="form-control col-sm-1">
-										<option>전체</option>
-										<option>email</option>
+									<select id="searchType" class="form-control col-sm-1">
+										<option value="">전체</option>
+										<option value="e">작성자</option>
+										<option value="c">문의내용</option>
+										<option value="d">작성날짜</option>
 									</select>
-									<input type="text" class="form-control col-sm-1" value="검색내용">
-									<input type="button" class="btn btn-secondary" value="검색">
+									<input type="text" class="form-control col-sm-1" placeholder="검색내용" id="searchValue">
+									<input type="button" class="btn btn-secondary" value="검색" id="search-btn">
 								</div>
 								<!-- table -->
 								<form action="questionDelete">

@@ -9,6 +9,7 @@
 <c:import url="../common/userSettings.jsp"></c:import>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="../resources/user/css/ticketing/seat.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
 	// 날짜 출력
 	let today = new Date();   
@@ -19,6 +20,72 @@
 
 	var week = new Array('일','월','화','수','목','금','토');
 	
+function check(){ 
+	var select_obj = '';
+	var check_length = $('input:checkbox[name=seat]:checked').length;
+   
+	$('input[type="checkbox"]:checked').each(function (index) {
+        if (index != 0) {
+            select_obj += ', ';
+        }
+        select_obj += $(this).val();
+    });
+    	$('#seat_length').text(check_length);
+    	 
+    	$('#seatresult').text(select_obj);
+    	$('#seatresult2').text(select_obj);
+    	
+    	$('#priceresult').text(check_length * 1000);
+    	$('#priceresult2').text(check_length * 1000);
+}
+	
+$(document).ready(function() {
+	$('.payment-btn').click(function(){
+		
+		var departure_area = $('#departure_area').text();
+		var destination = $('#destination').text();
+		var number_of_tickets = $('#seat_length').text();
+		var seat_number = $('#seatresult2').text();
+		var departure_date = $('#departure_date').text();
+		var bus_name = $('#bus_name').text();
+		
+		location.replace('buyTicket?departure_area='+departure_area
+						+'&destination='+destination
+						+'&number_of_tickets='+number_of_tickets
+						+'&seat_number='+seat_number
+						+'&departure_date='+departure_date
+						+'&bus_name='+bus_name
+						+''
+						);
+		
+		/* var allData = {
+				"departure_area" : departure_area,
+				"destination" : destination,
+				"number_of_tickets" : number_of_tickets,
+				"seat_number" : seat_number,
+				"departure_date" : departure_date,
+				"bus_name" : bus_name
+		};
+		if(confirm('구매하시겠습니까?')){
+		 $.ajax({
+		        url:"buyTicket",
+		        type:'POST',
+		        data: allData,
+		        error:function(){
+		        	alert('다시 시도해주세요 정상적으로 예매가 되지 않았습니다.');S
+		        }
+		    });
+		} */
+		
+		/* console.log(departure_area);
+		console.log(destination);
+		console.log(number_of_tickets);
+		console.log(seat_number);
+		console.log(departure_date);
+		console.log(bus_name); */
+	});
+});
+
 </script>
 </head>
 <body>
@@ -66,137 +133,29 @@
 				<div class="detail-box">
 					<div class="detail-head-box">
 						<div class="seat">잔여 ${vo.remaining_seats}석 / 전체 28석</div>
-						<div class="text"><span class="square-orange"></span>여성/노약자 우선</div>
 					</div>
 					<div class="detail-body-box">
 						<div class="select-seat-box">
 							<div class="seat-bg">
-								<div class="seat-list">
+								<div class="seat-list" >
 									<!-- item -->
-									<div class="seat-area">
-										<input type="checkbox" id="seat01" />
-										<label for="seat01">1</label>
-									</div>
-									<!-- // item -->
-									<div class="seat-area">
-										<input type="checkbox" id="seat02" />
-										<label for="seat02">2</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat03" />
-										<label for="seat03">3</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat04" />
-										<label for="seat04">4</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat05" />
-										<label for="seat05">5</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat06" />
-										<label for="seat06">6</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat07" />
-										<label for="seat07">7</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat08" />
-										<label for="seat08">8</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat09" />
-										<label for="seat09">9</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat10" />
-										<label for="seat10">10</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat11" />
-										<label for="seat11">11</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat12" />
-										<label for="seat12">12</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat13" />
-										<label for="seat13">13</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat14" />
-										<label for="seat14">14</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat15" />
-										<label for="seat15">15</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat16" />
-										<label for="seat16">16</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat17" />
-										<label for="seat17">17</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat18" />
-										<label for="seat18">18</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat19" />
-										<label for="seat19">19</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat20" />
-										<label for="seat20">20</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat21" />
-										<label for="seat21">21</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat22" />
-										<label for="seat22">22</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat23" />
-										<label for="seat23">23</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat24" />
-										<label for="seat24">24</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat25" />
-										<label for="seat25">25</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat26" />
-										<label for="seat26">26</label>
-									</div>
-									<div class="seat-area">
-										<input type="checkbox" id="seat27" />
-										<label for="seat27">27</label>
-									</div>
-									<div class="seat-area disabled">
-										<input type="checkbox" id="seat28" />
-										<label for="seat28">28</label>
-									</div>
+										<c:forEach var="li" items="${li}" varStatus="st">
+											<div class="seat-area">
+												<input type="checkbox" name="seat" id="seat0+${st.count}" value="${st.count}" onclick="check(this)"/>
+												<label for="seat0+${st.count}">${st.count}</label>
+											</div>
+										</c:forEach>
 								</div>
 							</div>
 						</div>
 						<div class="select-data-box">
 							<div class="seat-info">
 								<div class="text">선택좌석</div>
-								<div class="seat-number">6, 8</div>
+								<div class="seat-number" id="seatresult"></div>
 							</div>
 							<div class="price-info">
 								<span class="text">총 결제금액</span>
-								<span class="price">20,000원</span>
+								<span class="price" id="priceresult"></span>
 							</div>
 							<input type="button" class="seat-btn" value="선택완료"/>
 						</div>
@@ -219,39 +178,40 @@
 			<h3>가는 편 승차권 정보</h3>
 			<!-- content-box -->
 			<div class="content-box">
-				<div class="payment-head-box">
-					<script> 
-						document.write(year + '. ' + month + '. ' + date + '. ' + week[today.getDay()]+'요일') 
-					</script> ${vo.departure_time}</div>
+				<div class="payment-head-box" id="departure_date">${serverTime} ${vo.departure_time}시</div>
 				<div class="payment-body-box">
 					<div class="right-box">
 						<div class="start">
 							<div class="round">출발</div>
-							<div class="text">${vo.departure_area}</div>
+							<div class="text" id="departure_area">${vo.departure_area}</div>
 						</div>
 						<div class="end">
 							<div class="round">도착</div>
-							<div class="text">${vo.destination}</div>
+							<div class="text" id="destination">${vo.destination}</div>
 						</div>
 					</div>
 					<div class="left-box">
 						<div class="basics-box">
 							<div>매수</div>
-							<div>2</div>
+							<div id="seat_length"></div>
 						</div>
 						<div class="basics-box">
 							<div>좌석</div>
-							<div>1</div>
+							<div id="seatresult2"></div>
 						</div>
 						<div class="price-box">
 							<div>총 결제금액</div>
-							<div>22,222원</div>
+							<div id="priceresult2"></div>
+						</div>
+						<div class="price-box" hidden="true">
+							<div hidden="true">버스이름</div>
+							<div id="bus_name" hidden="true">${vo.bus_name}</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- // content-box -->
-			<input type="button" class="payment-btn" value="결제하기" />
+			<input type="button" class="payment-btn" value="결제하기"/>
 		</section>
 		<!-- // content -->
 		<!-- footer -->

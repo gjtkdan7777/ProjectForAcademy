@@ -24,15 +24,15 @@ $(function() {
 		}
 	});
 
+	
 	$('#search-btn').click(
-			function() {
-				location.href = "MemberList?searchType="
-						+ $('#searchType').val() + "&searchValue="
-						+ $('#searchValue').val();
-			});
-	
-});
-	
+				function() {
+					location.href = "MemberList?searchType="
+							+ $('#searchType').val() + "&searchValue="
+							+ $('#searchValue').val();
+				});
+
+	});
 </script>
 </head>
 <body>

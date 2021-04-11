@@ -9,6 +9,29 @@
 <c:import url="../common/userSettings.jsp"></c:import>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="../resources/user/css/myPage/ticketList.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+	$('.cancel-btn').click(function(){
+		var number = $(this).attr('id');
+		
+		$.ajax({
+			url:"cancelTicket",
+	        type:'POST',
+	        data:{
+	        	"ticketing_number" : number
+	        		        },
+	        success:function(){
+	        	location.reload();
+	        },
+	        error:function(){
+	        	alert('다시 시도해주세요 정상적으로 예매가 되지 않았습니다.');S
+	        }
+		});
+		
+    });
+});
+</script>
 </head>
 <body>
 	<!-- side-manu -->
@@ -42,39 +65,41 @@
 						<img src="../resources/user/images/myPage/ticketList/ico_tab_s_on3.png" alt="check" title="check" />
 					</div>
 					<div class="data-body-box">
-<c:if test="">
+<c:if test="${li==null}">
 						<!-- not-data -->
 						<p class="not-data">예매 자료가 존재하지 않습니다.</p>
 						<!-- // not-data -->
 </c:if>
 						<!-- item -->
+					<c:forEach var="li" items="${li}">
 						<div class="data-info-box">
 							<div class="info-title-box">티켓</div>
-							<div class="info-head-box">2021. 03. 31(수) 17:00 출발</div>
+							<div class="info-head-box">${li.departure_date} 출발</div>
 							<div class="info-body-box">
 								<div class="left-box">
 									<div class="info-box">
 										<div class="round">출발</div>
-										<div class="text">서울</div>
+										<div class="text">${li.departure_area}</div>
 									</div>
 									<div class="info-box">
 										<div class="round">도착</div>
-										<div class="text">서울</div>
+										<div class="text">${li.destination}</div>
 									</div>
 								</div>
 								<div class="right-box">
 									<div class="info-box">
 										<span class="s-text">매수</span>
-										<span class="m-text">2</span>
+										<span class="m-text">${li.number_of_tickets}</span>
 									</div>
 									<div class="info-box">
 										<span class="s-text">좌석</span>
-										<span class="m-text">5, 8</span>
+										<span class="m-text">${li.seat_number}</span>
 									</div>
 								</div>
 							</div>
 						</div>
-						<input type="button" class="cancel-btn" value="예매취소" />
+						<input type="button" class="cancel-btn" value="예매취소" id="${li.ticketing_number}"/>
+					</c:forEach>
 						<!-- // item -->
 					</div>
 				</div>

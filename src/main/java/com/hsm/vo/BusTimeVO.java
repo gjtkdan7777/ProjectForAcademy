@@ -11,5 +11,5 @@ public class BusTimeVO {
 	private int remaining_seats;
 	private int total_seats;
 	private String bus_name;
-	
+	private String area_name;
 }

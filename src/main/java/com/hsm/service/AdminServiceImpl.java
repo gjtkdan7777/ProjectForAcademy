@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hsm.util.AdminDAO;
+import com.hsm.vo.QnASearch;
 import com.hsm.vo.QnAVO;
 import com.hsm.vo.Search;
 import com.hsm.vo.TicketingVO;
@@ -34,8 +35,8 @@ public class AdminServiceImpl implements AdminService{
 	public int update(UserVO vo) {
 		return dao.update(vo);
 	}
-	public List<QnAVO> qnaList(){
-		return dao.qnaList();
+	public List<QnASearch> qnaList(QnASearch vo){
+		return dao.qnaList(vo);
 	}
 	public QnAVO selectQnA(QnAVO vo) {
 		return dao.selectQnA(vo);

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
 import com.hsm.vo.QnAVO;
+import com.hsm.vo.SeatVO;
+import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
 @Repository
@@ -36,8 +38,11 @@ public class UserDAO {
 	public List<BusTimeVO> busTimeList(AllBusVO vo) {
 		return sqlSession.selectList(NS+"busTimeList",vo);
 	}
-	public List<BusTimeVO> busSeat(BusTimeVO vo) {
+	public List<SeatVO> busSeat(BusTimeVO vo) {
 		return sqlSession.selectList(NS+"busSeat",vo);
+	}
+	public List<TicketingVO> ticketList(UserVO vo) {
+		return sqlSession.selectList(NS+"ticketList",vo);
 	}
 	public BusTimeVO busChoose(BusTimeVO vo) {
 		return sqlSession.selectOne(NS+"busChoose",vo);
@@ -57,4 +62,21 @@ public class UserDAO {
 	public int userContentInsert(QnAVO vo) {
 		return sqlSession.insert(NS+"userContentInsert",vo);
 	}
+	public int buyTicket(TicketingVO vo) {
+		return sqlSession.insert(NS+"buyTicket",vo);
+	}
+	public int busSeatcount(TicketingVO vo) {
+		return sqlSession.selectOne(NS+"busSeatcount",vo);
+	}
+	public int seatUpdate(TicketingVO vo) {
+		return sqlSession.update(NS+"seatUpdate",vo);
+	}
+	public int pay(UserVO vo) {
+		return sqlSession.update(NS+"pay",vo);
+	}
+	public int addSeat(BusTimeVO vo) {
+		return sqlSession.update(NS+"addSeat",vo);
+	}
+	
+	
 }

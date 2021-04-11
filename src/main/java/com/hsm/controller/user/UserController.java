@@ -1,6 +1,8 @@
 package com.hsm.controller.user;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hsm.service.UserService;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
 import com.hsm.vo.QnAVO;
+import com.hsm.vo.SeatVO;
+import com.hsm.vo.TicketingVO;
 import com.hsm.vo.UserVO;
 
 /**
@@ -33,7 +36,7 @@ public class UserController {
 	
 	// user main page
 	@RequestMapping(value = "/mainf")
-	public String main() {
+	public String main(Model model) {
 		return "user/main/main";
 	}
 	// user login page
@@ -64,10 +67,7 @@ public class UserController {
 	public String changePWf() {
 		return "user/myPage/changePW";
 	}
-	@RequestMapping(value = "/ticketList")
-	public String ticketList() {
-		return "user/myPage/ticketList";
-	}
+	
 	
 	@RequestMapping(value = "/qnaRegister")
 	public String qnaRegister() {
@@ -95,12 +95,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/seat")
-	public String seat(Model model, BusTimeVO vo) {
+	public String seat(Model model, BusTimeVO vo, TicketingVO tvo) {
+		List<SeatVO> list = new ArrayList<SeatVO>();
 		String bus_name = vo.getBus_name();
 		String area = bus_name.substring(0,bus_name.lastIndexOf("_"));
+		Date date = new Date();
 		vo.setDeparture_area(area);
 		vo = service.busChoose(vo);
-		System.out.println(vo);
+		list = service.busSeat(vo);
+		SimpleDateFormat formattedDate = new SimpleDateFormat("yyyy. MM. dd E");
+		model.addAttribute("serverTime", formattedDate.format(date));
+		model.addAttribute("li", list);
 		model.addAttribute("vo", vo);
 		return "user/ticketing/seat";
 	}
@@ -243,7 +248,6 @@ public class UserController {
 	@RequestMapping(value = "/terminal")
 	public String terminal(AllBusVO vo, Model model) {
 		List<AllBusVO> list = new ArrayList<AllBusVO>();
-		System.out.println(vo);
 		if(vo.getArea()==null || vo.getArea().equals("전체")) {
 			list = service.busList();
 			//터미널 정보가 있으면 & 설렉트로 지역을 변경 했으면
@@ -276,4 +280,93 @@ public class UserController {
 		return "user/qna/list";
 	}
 	
+	@RequestMapping(value = "/buyTicket")
+	public String buyTicket(Model model, TicketingVO vo,HttpSession session,
+			UserVO uvo, BusTimeVO tvo) {
+		String loginID = (String)session.getAttribute("loginID");
+		String url = "redirect:seat";
+		String msg = "";
+		
+		//1. 로그인 확인
+		if(loginID == null) {
+			msg = "로그인 후 이용해주세요";
+			model.addAttribute("msg", msg);
+			return "user/login/login";
+		}
+		if(vo.getNumber_of_tickets()==0) {
+			msg = "티켓을 골라주세요";
+			model.addAttribute("msg", msg);
+			return url;
+		}
+		vo.setEmail(loginID);
+		uvo.setEmail(loginID);
+		vo.setArea_name(vo.getDeparture_area());
+		//2. 구매자가 돈이 있는지 없는지
+		uvo = service.selectOne(uvo);
+		int ticket_price = vo.getNumber_of_tickets()*1000;
+		
+		if(uvo.getPoint()<ticket_price) {
+			msg = "필요한 금액이 부족합니다. 문의를 통해 충전해 주세요";
+			model.addAttribute("msg", msg);
+			return "user/main/main";
+		}
+		//3. 선택한 좌석이 예매 가능한지
+		String[] seatNumbers = vo.getSeat_number().split(",");
+		vo.setSeatNumbers(seatNumbers);
+		if(service.busSeatcount(vo)!=0) {
+			return url;
+		}
+		ticket_price = uvo.getPoint() - ticket_price;
+		System.out.println(ticket_price);
+		uvo.setPoint(ticket_price);
+		System.out.println(uvo);
+		
+		System.out.println(vo);
+		String bus_name = vo.getBus_name();
+		String area = bus_name.substring(0,bus_name.lastIndexOf("_"));
+		vo.setArea_name(area);
+		tvo.setDeparture_area(area);
+		tvo.setBus_name(bus_name);
+		tvo = service.busChoose(tvo);
+		System.out.println(tvo);
+		tvo.setArea_name(area);
+		if(
+				// 4. 예매
+				service.buyTicket(vo) > 0 && 
+				// 5. 좌석업데이트
+				service.seatUpdate(vo) > 0 &&
+				// 6. 유저에서 돈 뺴고
+				service.pay(uvo) > 0 &&
+				// 7. 배차조회 했을때 좌석 업데이트
+				service.addSeat(tvo) > 0
+				) {
+			msg = "예매 성공!";
+		}
+		return "redirect:ticketList";
+			
+}	
+			
+	@RequestMapping(value = "/ticketList")
+	public String ticketList(UserVO vo, HttpSession session, Model model,RedirectAttributes redirect) {
+		List<TicketingVO> list = new ArrayList<TicketingVO>();
+		vo.setEmail((String)session.getAttribute("loginID")); 
+		String msg = "";
+		String url = "";
+		if(vo.getEmail() != null) {
+			list = service.ticketList(vo);
+			url = "user/myPage/ticketList";
+		}else {
+			msg = "로그인 후 이용해주세요";
+			url = "redirect:loginf";
+		}
+		redirect.addFlashAttribute("msg", msg);
+		model.addAttribute("li", list);
+		return url;
+	}
+	
+	@RequestMapping(value = "/delete")
+	public void delete(UserVO vo, HttpSession session, Model model,RedirectAttributes redirect) {
+		
+		
+	}
 }

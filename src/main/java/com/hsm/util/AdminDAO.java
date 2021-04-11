@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hsm.vo.QnASearch;
 import com.hsm.vo.QnAVO;
 import com.hsm.vo.Search;
 import com.hsm.vo.TicketingVO;
@@ -37,8 +38,8 @@ public class AdminDAO {
 	public int insertAnswer(QnAVO vo) {
 		return sqlSession.update(NS+"insertAnswer",vo);
 	}
-	public List<QnAVO> qnaList() {
-		return sqlSession.selectList(NS+"qnaList");
+	public List<QnASearch> qnaList(QnASearch vo) {
+		return sqlSession.selectList(NS+"qnaList",vo);
 	}
 	public List<TicketingVO> TicketingList() {
 		return sqlSession.selectList(NS+"TicketingList");
