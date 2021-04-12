@@ -13,21 +13,29 @@
 <script type="text/javascript">
  $(document).ready(function() {
 	$('.cancel-btn').click(function(){
+		
 		var number = $(this).attr('id');
 		
-		$.ajax({
+		if(!confirm("예매를 취소하시겠습니까??")){
+			return;
+		}
+		
+		 $.ajax({
 			url:"cancelTicket",
 	        type:'POST',
+	        traditional : true,
 	        data:{
 	        	"ticketing_number" : number
-	        		        },
-	        success:function(){
-	        	location.reload();
-	        },
-	        error:function(){
-	        	alert('다시 시도해주세요 정상적으로 예매가 되지 않았습니다.');S
-	        }
-		});
+     		     },
+	        success: function(res){
+					console.log('asd');
+					location.reload();
+					return;
+			},
+			error: function(){
+				alert('Server Error');
+			}
+		}); 
 		
     });
 });

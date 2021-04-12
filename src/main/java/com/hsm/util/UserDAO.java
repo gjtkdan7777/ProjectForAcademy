@@ -47,6 +47,9 @@ public class UserDAO {
 	public BusTimeVO busChoose(BusTimeVO vo) {
 		return sqlSession.selectOne(NS+"busChoose",vo);
 	}
+	public TicketingVO getTicket(TicketingVO vo) {
+		return sqlSession.selectOne(NS+"getTicket",vo);
+	}
 	public int changePassword(UserVO vo) {
 		return sqlSession.update(NS+"changePassword",vo);
 	}
@@ -76,6 +79,15 @@ public class UserDAO {
 	}
 	public int addSeat(BusTimeVO vo) {
 		return sqlSession.update(NS+"addSeat",vo);
+	}
+	public int cancelTicket(TicketingVO vo) {
+		return sqlSession.update(NS+"cancelTicket",vo);
+	}
+	public int seatCancel(TicketingVO vo) {
+		return sqlSession.update(NS+"seatCancel",vo);
+	}
+	public int payCancel(UserVO vo) {
+		return sqlSession.update(NS+"payCancel",vo);
 	}
 	
 	

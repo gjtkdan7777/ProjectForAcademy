@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hsm.service.UserService;
@@ -332,7 +333,7 @@ public class UserController {
 //		System.out.println(seatNumbers.length);
 //		System.out.println(tvo);
 		
-		tvo.setRemaining_seats(tvo.getRemaining_seats()-seatNumbers.length);
+ 		tvo.setRemaining_seats(tvo.getRemaining_seats()-seatNumbers.length);
 //		System.out.println(tvo);
 		tvo.setArea_name(area);
 		if(
@@ -370,7 +371,45 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/cancelTicket")
-	public void delete(UserVO vo, HttpSession session, Model model,RedirectAttributes redirect) {
+	@ResponseBody
+	public String delete(TicketingVO vo, BusTimeVO tvo,AllBusVO avo, UserVO uvo) {
+		System.out.println(vo);
+		vo = service.getTicket(vo);
+		System.out.println(vo);
+//		bus_name TB 에서 available_seat 0으로 바꾸고 WHERE 
+//		<foreach>
+//		seat_number = #{seat_number}
+		String[] seatNumbers = vo.getSeat_number().split(",");
+		vo.setSeatNumbers(seatNumbers);
+		tvo.setArea_name(vo.getArea_name());
+		tvo.setBus_name(vo.getBus_name());
+		System.out.println(tvo);
+		avo.setArea(vo.getArea_name());
+		tvo.setDeparture_area(tvo.getArea_name());
+		tvo = service.busChoose(tvo);
+		tvo.setArea_name(vo.getArea_name());
 		
+		tvo.setRemaining_seats(tvo.getRemaining_seats()+seatNumbers.length); 
+		
+		System.out.println(tvo);
+		
+		
+//		area_name_time_tb 에서 remaining_seats =+ number_of_tickets 한 값 SET WHERE bus_name=#{bus_name}
+		uvo.setEmail(vo.getEmail());
+//		환불 member_tb에서 point = #{point} WHERE email = #{email}
+		uvo = service.selectOne(uvo);
+		uvo.setPoint(uvo.getPoint()+tvo.getTicket_price()*seatNumbers.length); 
+		//		ticketing_detail_tb에서 status 바꿈
+		if(service.cancelTicket(vo)>0  &&
+//				bus_name에서 자리상태 0으로 바꿈
+				service.seatCancel(vo) > 0 &&
+//				Time_tb에 남은자리 추가
+				service.addSeat(tvo) > 0 &&
+//				환불
+				service.payCancel(uvo) > 0
+			) {
+			return "success";
+		}
+		return "fail";
 	}
 }

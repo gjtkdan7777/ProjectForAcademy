@@ -78,4 +78,16 @@ public class UserServiceImpl implements UserService{
 	public int addSeat(BusTimeVO vo) {
 		return dao.addSeat(vo);
 	}
+	public int cancelTicket(TicketingVO vo) {
+		return dao.cancelTicket(vo);
+	}
+	public TicketingVO getTicket(TicketingVO vo) {
+		return dao.getTicket(vo);
+	}
+	public int seatCancel(TicketingVO vo) {
+		return dao.seatCancel(vo);
+	}
+	public int payCancel(UserVO vo) {
+		return dao.payCancel(vo);
+	}
 }

@@ -29,4 +29,8 @@ public interface UserService {
 	public int seatUpdate(TicketingVO vo);
 	public int pay(UserVO vo);
 	public int addSeat(BusTimeVO vo);
+	public int cancelTicket(TicketingVO vo);
+	public TicketingVO getTicket(TicketingVO vo);
+	public int seatCancel(TicketingVO vo);
+	public int payCancel(UserVO vo);
 }

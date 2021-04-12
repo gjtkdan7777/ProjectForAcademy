@@ -106,8 +106,33 @@
 	</update>
 	
 	<update id="addSeat">
-		UPDATE ${area_name}_time_tb SET remaining_seats = ${remaining_seats} 
+		UPDATE ${area_name}_time_tb SET remaining_seats = #{remaining_seats} 
 		WHERE bus_name = #{bus_name}
 	</update>
+	
+	<select id="getTicket" resultType="com.hsm.vo.TicketingVO"> 
+		SELECT * FROM ticketing_detail_tb WHERE ticketing_number = #{ticketing_number}
+	</select>
+	
+	<update id="cancelTicket">
+		UPDATE ticketing_detail_tb SET ticketing_status = 0 WHERE ticketing_number = #{ticketing_number}
+	</update>
+	
+	<update id="seatCancel" >
+		UPDATE ${bus_name} 
+		SET 
+			available_seat = 0,
+			email = #{email}
+		 WHERE seat_number IN 
+		<foreach collection="seatNumbers" item="item" open="(" separator="," close=")" >
+			#{item}
+		</foreach>
+	</update>
+	
+	<!-- user에 돈 업데이트 -->
+	<update id="payCancel">
+		UPDATE member_tb SET point = #{point} WHERE email = #{email}
+	</update>
+	
 	
 </mapper>  
