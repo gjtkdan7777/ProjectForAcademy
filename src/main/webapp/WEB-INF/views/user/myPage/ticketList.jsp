@@ -80,6 +80,7 @@
 					</c:if>
 						<!-- item -->
 					<c:forEach var="li" items="${li}">
+				<c:if test="${li.ticketing_status==1}">
 						<div class="data-info-box">
 							<div class="info-title-box">티켓</div>
 							<div class="info-head-box">${li.departure_date} 출발</div>
@@ -107,6 +108,38 @@
 							</div>
 						</div>
 						<input type="button" class="cancel-btn" value="예매취소" id="${li.ticketing_number}"/>
+				</c:if>
+					</c:forEach>
+					<c:forEach var="li" items="${li}">
+						<c:if test="${li.ticketing_status==0}">
+						<div class="data-info-box">
+							<div class="info-title-box">티켓</div>
+							<div class="info-head-box">${li.departure_date} 출발</div>
+							<div class="info-body-box">
+								<div class="left-box">
+									<div class="info-box">
+										<div class="round">출발</div>
+										<div class="text">${li.departure_area}</div>
+									</div>
+									<div class="info-box">
+										<div class="round">도착</div>
+										<div class="text">${li.destination}</div>
+									</div>
+								</div>
+								<div class="right-box">
+									<div class="info-box">
+										<span class="s-text">매수</span>
+										<span class="m-text">${li.number_of_tickets}</span>
+									</div>
+									<div class="info-box">
+										<span class="s-text">좌석</span>
+										<span class="m-text">${li.seat_number}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type="button" class="cancel-btn" value="취소완료" disabled/>
+						</c:if>
 					</c:forEach>
 						<!-- // item -->
 					</div>

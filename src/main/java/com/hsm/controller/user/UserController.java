@@ -336,6 +336,7 @@ public class UserController {
  		tvo.setRemaining_seats(tvo.getRemaining_seats()-seatNumbers.length);
 //		System.out.println(tvo);
 		tvo.setArea_name(area);
+		System.out.println(tvo);
 		if(
 				// 4. 예매
 				service.buyTicket(vo) > 0 && 
