@@ -140,10 +140,18 @@ $(document).ready(function() {
 								<div class="seat-list" >
 									<!-- item -->
 										<c:forEach var="li" items="${li}" varStatus="st">
-											<div class="seat-area">
-												<input type="checkbox" name="seat" id="seat0+${st.count}" value="${st.count}" onclick="check(this)"/>
-												<label for="seat0+${st.count}">${st.count}</label>
-											</div>
+											<c:if test="${li.available_seat==0}">
+												<div class="seat-area" >
+													<input type="checkbox" name="seat" id="seat0+${st.count}" value="${st.count}" 
+													onclick="check(this)" />
+													<label for="seat0+${st.count}">${st.count}</label>
+												</div>
+											</c:if>
+											<c:if test="${li.available_seat==1}">
+												<div class="seat-area disabled"  >
+													<label>${st.count}</label>
+												</div>
+											</c:if>
 										</c:forEach>
 								</div>
 							</div>

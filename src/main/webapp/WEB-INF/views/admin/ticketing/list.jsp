@@ -91,7 +91,7 @@
 											<th>출발</th>
 											<th>도착</th>
 											<th>날짜</th>
-											<!-- <th>매수</th> -->
+											<th>매수</th>
 											<th>좌석</th>
 											<th>상태</th>
 											<th>비고</th>
@@ -106,9 +106,9 @@
 											<td>${li.departure_area}</td>
 											<td>${li.destination}</td>
 											<td>${li.departure_date}</td>
-											<%-- <td>${li.seat_number}</td> --%>
+											<td>${li.number_of_tickets}</td>
 											<td>${li.seat_number}</td>
-											<td>${li.ticketion_status}</td>
+											<td>${li.ticketing_status}</td>
 											<td>
 												<button type="button" class="btn btn-danger">예매 취소</button>
 											</td>

@@ -317,18 +317,23 @@ public class UserController {
 			return url;
 		}
 		ticket_price = uvo.getPoint() - ticket_price;
-		System.out.println(ticket_price);
+//		System.out.println(ticket_price);
 		uvo.setPoint(ticket_price);
-		System.out.println(uvo);
+//		System.out.println(uvo);
 		
-		System.out.println(vo);
+//		System.out.println(vo);
 		String bus_name = vo.getBus_name();
 		String area = bus_name.substring(0,bus_name.lastIndexOf("_"));
 		vo.setArea_name(area);
+		
 		tvo.setDeparture_area(area);
 		tvo.setBus_name(bus_name);
 		tvo = service.busChoose(tvo);
-		System.out.println(tvo);
+//		System.out.println(seatNumbers.length);
+//		System.out.println(tvo);
+		
+		tvo.setRemaining_seats(tvo.getRemaining_seats()-seatNumbers.length);
+//		System.out.println(tvo);
 		tvo.setArea_name(area);
 		if(
 				// 4. 예매
@@ -364,9 +369,8 @@ public class UserController {
 		return url;
 	}
 	
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/cancelTicket")
 	public void delete(UserVO vo, HttpSession session, Model model,RedirectAttributes redirect) {
-		
 		
 	}
 }

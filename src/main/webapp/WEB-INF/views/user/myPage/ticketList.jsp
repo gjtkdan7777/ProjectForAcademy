@@ -65,11 +65,11 @@
 						<img src="../resources/user/images/myPage/ticketList/ico_tab_s_on3.png" alt="check" title="check" />
 					</div>
 					<div class="data-body-box">
-<c:if test="${li==null}">
+					<c:if test="${li==null}">
 						<!-- not-data -->
 						<p class="not-data">예매 자료가 존재하지 않습니다.</p>
 						<!-- // not-data -->
-</c:if>
+					</c:if>
 						<!-- item -->
 					<c:forEach var="li" items="${li}">
 						<div class="data-info-box">
