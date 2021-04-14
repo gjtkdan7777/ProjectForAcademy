@@ -79,10 +79,10 @@ function secession() {
 		<!-- header -->
 		<header id="header">
 			<h2>마이페이지</h2>
-			<a href="#e" class="page-move">
+			<a href="ticketList" class="page-move">
 				<span class="img-box"></span>
 				<span class="sm-text">나의 예매내역</span>
-				<span class="m-text">0건</span>
+				<span class="m-text">${myticketCount}건</span>
 				<span class="white-text">예매확인/취소 ></span>
 			</a>
 		</header>

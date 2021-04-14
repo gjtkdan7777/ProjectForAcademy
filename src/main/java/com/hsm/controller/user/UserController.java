@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hsm.service.SendMailService;
 import com.hsm.service.UserService;
 import com.hsm.vo.AllBusVO;
 import com.hsm.vo.BusTimeVO;
@@ -30,6 +31,9 @@ import com.hsm.vo.UserVO;
 @Controller
 @RequestMapping(value = "user")
 public class UserController {
+	
+	@Autowired
+	SendMailService sendMailService;
 	@Autowired
 	UserService service;
 	@Autowired
@@ -47,7 +51,7 @@ public class UserController {
 	}
 	// user find id page
 	@RequestMapping(value = "/findIDf")
-	public String findID() {
+	public String findIDf() {
 		return "user/login/findID";
 	}
 	// user find pw page
@@ -75,7 +79,14 @@ public class UserController {
 		return "user/qna/register";
 	}
 	
-	
+	@RequestMapping(value = "/findID")
+	public String findID(UserVO vo, Model model) {
+		vo = service.findPW(vo);
+		if(vo != null) {
+			model.addAttribute("email", vo.getEmail());
+		}
+		return "jsonView";
+	}
 	
 	// user ticketing search page
 	@RequestMapping(value = "/search")
@@ -114,6 +125,7 @@ public class UserController {
 	@RequestMapping(value = "/myPage")
 	public String myPage(Model model,UserVO vo,HttpServletRequest request) {
 		vo.setEmail((String)request.getSession().getAttribute("loginID"));
+		model.addAttribute("myticketCount",service.myticketList(vo));
 		model.addAttribute("vo", service.selectOne(vo));
 		return "user/myPage/home";
 	}
@@ -413,4 +425,13 @@ public class UserController {
 		}
 		return "fail";
 	}
+	
+	//이메일전송
+		@RequestMapping(value = "sendEmail")
+		public String sendEmail(UserVO vo) {
+			if(sendMailService.sendEmail(vo)) {
+				return "redirect:loginf";
+			}
+			return "findIDf";
+		}
 }

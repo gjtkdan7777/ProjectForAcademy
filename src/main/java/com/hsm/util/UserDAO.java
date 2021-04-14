@@ -26,6 +26,9 @@ public class UserDAO {
 	public UserVO selectOne(UserVO vo) {
 		return sqlSession.selectOne(NS+"selectOne",vo);
 	}
+	public UserVO findPW(UserVO vo) {
+		return sqlSession.selectOne(NS+"findPW",vo);
+	}
 	public List<AllBusVO> busList() {
 		return sqlSession.selectList(NS+"busList");
 	}
@@ -88,6 +91,9 @@ public class UserDAO {
 	}
 	public int payCancel(UserVO vo) {
 		return sqlSession.update(NS+"payCancel",vo);
+	}
+	public int myticketList(UserVO vo) {
+		return sqlSession.selectOne(NS+"myticketList",vo);
 	}
 	
 	

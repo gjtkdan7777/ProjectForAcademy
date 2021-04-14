@@ -27,8 +27,7 @@
 	        data:{
 	        	"ticketing_number" : number
      		     },
-	        success: function(res){
-					console.log('asd');
+	        success: function(){
 					location.reload();
 					return;
 			},

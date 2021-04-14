@@ -33,4 +33,7 @@ public interface UserService {
 	public TicketingVO getTicket(TicketingVO vo);
 	public int seatCancel(TicketingVO vo);
 	public int payCancel(UserVO vo);
+	public int myticketList(UserVO vo);
+	public UserVO findPW(UserVO vo);
+	
 }

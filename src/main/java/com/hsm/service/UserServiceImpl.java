@@ -90,4 +90,11 @@ public class UserServiceImpl implements UserService{
 	public int payCancel(UserVO vo) {
 		return dao.payCancel(vo);
 	}
+	public int myticketList(UserVO vo) {
+		return dao.myticketList(vo);
+	}
+	public UserVO findPW(UserVO vo) {
+		return dao.findPW(vo);
+	}
+	
 }

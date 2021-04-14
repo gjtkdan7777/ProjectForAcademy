@@ -9,6 +9,34 @@
 <c:import url="../common/userSettings.jsp"></c:import>
 <!-- css -->
 <link rel="stylesheet" type="text/css" href="../resources/user/css/login/findID.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	
+$(document).ready(function() {
+	$('.find-id-btn').click(function(){
+		
+		 var phone = $('#phone').val();
+		
+		 $.ajax({
+			url:"findID",
+	        type:'POST',
+	        data:{
+	        	"phone" : phone
+     		     },
+	        success: function(res){
+	        	$('#email').text(res.email);
+	        	console.log(res);
+				return;
+			},
+			error: function(){
+				alert('Server Error');
+			}
+		});
+		
+    });
+});
+	
+</script>
 </head>
 <body>
 	<!-- side-manu -->
@@ -34,7 +62,7 @@
 					<div class="area">
 						<div class="input-box">
 							<label for="phone">휴대폰번호</label>
-							<input type="text" id="phone" placeholder="휴대폰번호를 입력하세요."/>
+							<input type="text" id="phone" value="" placeholder="휴대폰번호를 입력하세요."/>
 						</div>
 						<input type="button" class="find-id-btn" value="확인" />
 					</div>
@@ -44,7 +72,7 @@
 				<div class="result-box result">
 					<div class="area">
 						<p class="text-head">회원님의 아이디는 다음과 같습니다.</p>
-						<div class="result-id">jjgodc***@g****.com</div>
+						<div class="result-id" id="email">${email}</div>
 						<p class="text-foot">개인정보 보호를 위하여 일부 글자가 *로 표시됩니다.</p>
 					</div>
 				</div>

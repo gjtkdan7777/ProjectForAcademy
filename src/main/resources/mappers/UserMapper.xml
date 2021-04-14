@@ -12,6 +12,10 @@
 	    SELECT * FROM member_tb WHERE email = #{email}
 	</select>
 	
+	<select id="findPW" resultType="com.hsm.vo.UserVO">
+	    SELECT * FROM member_tb WHERE phone = #{phone}
+	</select>
+	
 	<select id="busList" resultType="com.hsm.vo.AllBusVO">
 	    SELECT * FROM all_bus_tb
 	</select>
@@ -69,7 +73,7 @@
 	
 	<insert id="buyTicket">
 	 <selectKey keyProperty="ticketing_number" resultType="int" order="BEFORE">
-	     SELECT NVL(MAX(ticketing_number),00000000)+1 FROM ticketing_detail_tb
+	     SELECT NVL(MAX(ticketing_number),0)+1 FROM ticketing_detail_tb
 	   </selectKey>
 		INSERT INTO ticketing_detail_tb 
 			VALUES(
@@ -89,7 +93,9 @@
 	<select id="ticketList" resultType="com.hsm.vo.TicketingVO">
 	    SELECT * FROM ticketing_detail_tb WHERE email = #{email}
 	</select>
-	<!--  -->
+	<select id="myticketList" resultType="int">
+	    SELECT count(*) FROM ticketing_detail_tb WHERE email = #{email} AND ticketing_status = 1
+	</select>
 	<update id="seatUpdate" >
 		UPDATE ${bus_name} 
 		SET 
@@ -122,7 +128,7 @@
 		UPDATE ${bus_name} 
 		SET 
 			available_seat = 0,
-			email = #{email}
+			email = null
 		 WHERE seat_number IN 
 		<foreach collection="seatNumbers" item="item" open="(" separator="," close=")" >
 			#{item}

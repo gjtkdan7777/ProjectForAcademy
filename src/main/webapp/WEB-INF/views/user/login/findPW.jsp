@@ -51,7 +51,7 @@
 			<!-- // content-box -->
 			<div class="result">
 				<ul class="page-move">
-					<li><a href="#e">임시 비밀번호 발송</a></li>
+					<li><a href="sendEmail?email=tkdan7777@naver.com">임시 비밀번호 발송</a></li>
 				</ul>
 			</div>
 		</section>
