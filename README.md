@@ -49,3 +49,19 @@ ADMIN 메인페이지
 Q&A 리스트 출력및 답변 가능
 ![스크린샷 2021-07-29 21 24 27](https://user-images.githubusercontent.com/75287634/127491232-ec5edb98-a5de-4195-8f53-7210acd39f71.png)
 
+## 구현 : 프론트 & 백 모든기능 및 디비 설계 참여 & 자료조사 & ERD & SQL문 작성 
+
+## 프로젝트기간 : 2월 중순 4월중순 약 2달간 
+
+## 개발스텍
+
+  ### 개발언어 
+    JAVA
+    jquery & AJAX
+    javascript
+
+## DB : Oracle
+
+
+
+
