@@ -41,3 +41,11 @@ ADMIN 메인페이지
 
 유저정보수정 페이지
 ![스크린샷 2021-07-29 21 21 19](https://user-images.githubusercontent.com/75287634/127490862-662afd2a-1a3f-4cb1-b375-ce13757eab91.png)
+
+유저의 예매리스트 전체조회
+
+![스크린샷 2021-07-29 21 23 48](https://user-images.githubusercontent.com/75287634/127491153-cc53edea-4644-4ae2-99ac-0d2c4f85fb37.png)
+
+Q&A 리스트 출력및 답변 가능
+![스크린샷 2021-07-29 21 24 27](https://user-images.githubusercontent.com/75287634/127491232-ec5edb98-a5de-4195-8f53-7210acd39f71.png)
+
