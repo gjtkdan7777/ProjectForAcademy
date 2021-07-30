@@ -58,7 +58,7 @@ Q&A 리스트 출력및 답변 가능
   ### 개발언어 
     JAVA
     jquery & AJAX
-    javascript
+    javascript es5
 
 ## DB : Oracle
 
