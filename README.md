@@ -61,7 +61,7 @@ Q&A 리스트 출력및 답변 가능
     javascript es5
 
 ## DB : Oracle
-
+### 담당파트 : CSS를 제외하고 전부 본인이 구현 
 
 
 
